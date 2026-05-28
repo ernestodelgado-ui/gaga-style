@@ -63,28 +63,76 @@
                 <h1>Vestido couture blanco</h1>
                 <p class="marca-lead">Valentino × Lady Gaga · 2014</p>
 
-                <figure>
-                    <picture>
-                        <source media="(max-width: 767px)" srcset="../multimedia/looks-marca/marca3-look_mobile.webp">
-                        <source media="(max-width: 991px)" srcset="../multimedia/looks-marca/marca3-look_tablet.webp">
-                        <img src="../multimedia/looks-marca/marca3-look_pc.webp" class="img-fluid" alt="Vestido Valentino blanco lucido por Lady Gaga">
-                    </picture>
-                </figure>
+                <!-- Foto principal + galería 2x3. Las 6 imágenes de la galería se comparten
+                     entre todas las marcas (carpeta multimedia/looks-marca/galeria/marca1-*).
+                     En mobile la galería se oculta. Cada thumb abre un modal de Bootstrap
+                     con la versión grande + texto descriptivo. -->
+                <div class="row look-fila align-items-start">
+                    <figure class="col-12 col-md-7 look-figura-principal">
+                        <picture>
+                            <source media="(max-width: 767px)" srcset="../multimedia/looks-marca/marca3-look_mobile.webp">
+                            <source media="(max-width: 991px)" srcset="../multimedia/looks-marca/marca3-look_tablet.webp">
+                            <img src="../multimedia/looks-marca/marca3-look_pc.webp" class="img-fluid" alt="Vestido Valentino blanco lucido por Lady Gaga">
+                        </picture>
+                    </figure>
 
+                    <div class="col-md-5 look-galeria d-none d-md-block">
+                        <ul class="row list-unstyled g-3">
+                            <li class="col-6">
+                                <button type="button" class="look-thumb" data-bs-toggle="modal" data-bs-target="#galeriaFoto1">
+                                    <img src="../multimedia/looks-marca/galeria/marca1-thumb1.webp" class="img-fluid" alt="Detalle 1 del look">
+                                </button>
+                            </li>
+                            <li class="col-6">
+                                <button type="button" class="look-thumb" data-bs-toggle="modal" data-bs-target="#galeriaFoto2">
+                                    <img src="../multimedia/looks-marca/galeria/marca1-thumb2.webp" class="img-fluid" alt="Detalle 2 del look">
+                                </button>
+                            </li>
+                            <li class="col-6">
+                                <button type="button" class="look-thumb" data-bs-toggle="modal" data-bs-target="#galeriaFoto3">
+                                    <img src="../multimedia/looks-marca/galeria/marca1-thumb3.webp" class="img-fluid" alt="Detalle 3 del look">
+                                </button>
+                            </li>
+                            <li class="col-6">
+                                <button type="button" class="look-thumb" data-bs-toggle="modal" data-bs-target="#galeriaFoto4">
+                                    <img src="../multimedia/looks-marca/galeria/marca1-thumb4.webp" class="img-fluid" alt="Detalle 4 del look">
+                                </button>
+                            </li>
+                            <li class="col-6">
+                                <button type="button" class="look-thumb" data-bs-toggle="modal" data-bs-target="#galeriaFoto5">
+                                    <img src="../multimedia/looks-marca/galeria/marca1-thumb5.webp" class="img-fluid" alt="Detalle 5 del look">
+                                </button>
+                            </li>
+                            <li class="col-6">
+                                <button type="button" class="look-thumb" data-bs-toggle="modal" data-bs-target="#galeriaFoto6">
+                                    <img src="../multimedia/looks-marca/galeria/marca1-thumb6.webp" class="img-fluid" alt="Detalle 6 del look">
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 3 bloques de info (transparentes en mobile/tablet, cards en PC). -->
                 <article class="marca-info">
-                    <h2>El look</h2>
-                    <p>Vestido Valentino blanco de alta costura, bordado con cristales aplicados a mano. Una silueta clásica, ceñida al busto y con volumen largo en la falda, alejada del shock visual de los primeros años de Lady Gaga. La pureza del blanco como statement.</p>
+                    <div class="look-bloque look-bloque-intro">
+                        <h2>El look</h2>
+                        <p>Vestido Valentino blanco de alta costura, bordado con cristales aplicados a mano. Una silueta clásica, ceñida al busto y con volumen largo en la falda, alejada del shock visual de los primeros años de Lady Gaga. La pureza del blanco como statement.</p>
+                    </div>
 
-                    <h2>Detalles</h2>
-                    <ul>
-                        <li><strong>Casa:</strong> Maison Valentino</li>
-                        <li><strong>Año:</strong> 2014</li>
-                        <li><strong>Era:</strong> Cheek to Cheek</li>
-                        <li><strong>Colaboración:</strong> dúo jazz con Tony Bennett</li>
-                    </ul>
+                    <div class="look-bloque look-bloque-detalles">
+                        <h2>Detalles</h2>
+                        <ul>
+                            <li><strong>Casa:</strong> Maison Valentino</li>
+                            <li><strong>Año:</strong> 2014</li>
+                            <li><strong>Era:</strong> Cheek to Cheek</li>
+                            <li><strong>Colaboración:</strong> dúo jazz con Tony Bennett</li>
+                        </ul>
+                    </div>
 
-                    <h2>Por qué importa</h2>
-                    <p>Representa el pivot estético de Gaga hacia un público más adulto y un repertorio más clásico. La era Cheek to Cheek la mostró cantando estándares de jazz junto a Tony Bennett, y Valentino acompañó ese giro con el lujo más sobrio del armario de la cantante. Fue una declaración: Gaga también podía ser tradición.</p>
+                    <div class="look-bloque look-bloque-importa">
+                        <h2>Por qué importa</h2>
+                        <p>Representa el pivot estético de Gaga hacia un público más adulto y un repertorio más clásico. La era Cheek to Cheek la mostró cantando estándares de jazz junto a Tony Bennett, y Valentino acompañó ese giro con el lujo más sobrio del armario de la cantante. Fue una declaración: Gaga también podía ser tradición.</p>
+                    </div>
                 </article>
 
                 <a href="marca3.html" class="btn btn-outline-warning">Volver a Valentino</a>
@@ -104,6 +152,134 @@
             <p>&copy; 2026 Gaga Style. Todos los derechos reservados.</p>
         </div>
     </footer>
+
+    <!-- Modales de la galería: uno por cada thumb. Se abren con data-bs-toggle="modal".
+         Cada modal muestra la foto grande (720x960) a la izquierda y el texto a la derecha. -->
+    <div class="modal fade look-modal" id="galeriaFoto1" tabindex="-1" aria-labelledby="galeriaFoto1Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="galeriaFoto1Label">Detalle barroco</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <img src="../multimedia/looks-marca/galeria/marca1-foto1.webp" class="img-fluid look-modal-img" alt="Detalle 1 del look">
+                        </div>
+                        <div class="col-md-6">
+                            <p>Plano cerrado de un vestido drapeado en seda con bordados dorados. Los prints recargados —cabeza de Medusa, motivos griegos— son la firma inconfundible de Versace.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade look-modal" id="galeriaFoto2" tabindex="-1" aria-labelledby="galeriaFoto2Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="galeriaFoto2Label">Pose editorial</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <img src="../multimedia/looks-marca/galeria/marca1-foto2.webp" class="img-fluid look-modal-img" alt="Detalle 2 del look">
+                        </div>
+                        <div class="col-md-6">
+                            <p>Pose de campaña fotografiada por Mert Alas y Marcus Piggott. Lady Gaga encarna a la diosa griega que las casas de alta costura evocan temporada tras temporada.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade look-modal" id="galeriaFoto3" tabindex="-1" aria-labelledby="galeriaFoto3Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="galeriaFoto3Label">Drapeado dorado</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <img src="../multimedia/looks-marca/galeria/marca1-foto3.webp" class="img-fluid look-modal-img" alt="Detalle 3 del look">
+                        </div>
+                        <div class="col-md-6">
+                            <p>El drapeado en oro y la caída de la seda repiten el gesto barroco italiano: dramatismo controlado, sensualidad descarada y cita constante al imaginario clásico.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade look-modal" id="galeriaFoto4" tabindex="-1" aria-labelledby="galeriaFoto4Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="galeriaFoto4Label">Imagen icónica</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <img src="../multimedia/looks-marca/galeria/marca1-foto4.webp" class="img-fluid look-modal-img" alt="Detalle 4 del look">
+                        </div>
+                        <div class="col-md-6">
+                            <p>Una de las imágenes más reproducidas de Lady Gaga: campaña fotografiada como editorial puro, donde cada accesorio y cada gesto fue calculado al detalle.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade look-modal" id="galeriaFoto5" tabindex="-1" aria-labelledby="galeriaFoto5Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="galeriaFoto5Label">Detalle de accesorio</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <img src="../multimedia/looks-marca/galeria/marca1-foto5.webp" class="img-fluid look-modal-img" alt="Detalle 5 del look">
+                        </div>
+                        <div class="col-md-6">
+                            <p>El accesorio cerró la campaña: una pieza labrada en metal que se transformó en símbolo. Las casas de alta costura construyen identidad a través de detalles así.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade look-modal" id="galeriaFoto6" tabindex="-1" aria-labelledby="galeriaFoto6Label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="galeriaFoto6Label">Mirada de campaña</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-6">
+                            <img src="../multimedia/looks-marca/galeria/marca1-foto6.webp" class="img-fluid look-modal-img" alt="Detalle 6 del look">
+                        </div>
+                        <div class="col-md-6">
+                            <p>Plano del rostro: maquillaje editorial, mirada fija a cámara y estilismo cuidado al milímetro. La estética que se repitió en toda la campaña gráfica del look.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="../js/bootstrap.bundle.min.js"></script>
 </body>

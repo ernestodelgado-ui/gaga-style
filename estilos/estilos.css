@@ -1331,6 +1331,111 @@ header {
     margin-right: 8px;
 }
 
+/* --------------------------------------------
+   Galería del look (solo tablet y PC)
+   --------------------------------------------
+   Fila con foto principal a la izquierda + grilla 2x2 de thumbs
+   a la derecha. En mobile la galería está oculta por d-none d-md-block
+   en el HTML y queda solo la foto principal a ancho completo.
+   Cada thumb es un <button> (data-bs-toggle="modal") que abre un modal
+   de Bootstrap con la versión grande de la foto + texto. */
+#look-marca .look-fila {
+    margin: 30px 0;
+}
+
+/* La figure principal ya tiene su marco dorado heredado de #look-marca figure,
+   pero por estar dentro de una columna de Bootstrap arrastra el padding del col.
+   Lo bajamos para que el marco arranque pegado al borde del col. */
+#look-marca .look-figura-principal {
+    margin: 0;
+}
+
+/* Grilla 2x2 de thumbnails. Cada thumb es cuadrado-ish (mantenemos
+   el 3:4 vertical de las imágenes 360x480). */
+#look-marca .look-galeria ul {
+    margin: 0;
+}
+
+#look-marca .look-thumb {
+    display: block;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: 2px solid rgba(224, 179, 65, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#look-marca .look-thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+#look-marca .look-thumb:hover,
+#look-marca .look-thumb:focus-visible {
+    border-color: var(--dorado);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    outline: none;
+}
+
+#look-marca .look-thumb:hover img,
+#look-marca .look-thumb:focus-visible img {
+    transform: scale(1.08);
+}
+
+/* --------------------------------------------
+   Modal de la galería
+   --------------------------------------------
+   Pisa los estilos default de Bootstrap para que el modal use la
+   paleta navy + dorado del sitio. */
+.look-modal .modal-content {
+    background-color: var(--navy-fondo);
+    color: var(--texto-claro);
+    border: 2px solid rgba(224, 179, 65, 0.5);
+    border-radius: 16px;
+}
+
+.look-modal .modal-header {
+    border-bottom: 1px solid rgba(224, 179, 65, 0.25);
+    padding: 1rem 1.25rem;
+}
+
+.look-modal .modal-title {
+    color: var(--dorado);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* El botón cerrar de Bootstrap es una X negra → la invertimos a blanca
+   para que se vea sobre el fondo navy. */
+.look-modal .btn-close {
+    filter: invert(1) grayscale(100%) brightness(1.5);
+}
+
+.look-modal .modal-body {
+    padding: 1.5rem;
+}
+
+.look-modal .look-modal-img {
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.look-modal .modal-body p {
+    color: var(--texto-claro);
+    line-height: 1.7;
+    margin: 0;
+}
+
 /* ============================================
    8) Looks icónicos (sección del index)
    --------------------------------------------
@@ -1976,5 +2081,153 @@ footer .footer-carrera {
     }
     .pagina-sobre .sobre-info::-webkit-scrollbar-thumb:hover {
         background: var(--dorado);
+    }
+}
+
+/* ============================================
+   Look de marca — layout PC (≥1024px)
+   --------------------------------------------
+   En mobile/tablet la página queda con el flujo natural: figure +
+   galería (en tablet) arriba, y debajo los 3 bloques de info como
+   texto corrido, seguido del botón "Volver".
+
+   En PC pasamos a un grid de 2 columnas con 3 cards de info:
+       intro → al lado de la galería (cap a la altura de la galería,
+               con scroll si excede)
+       detalles + importa → fila inferior full-width, lado a lado
+
+   ┌──────────┬──────────┐
+   │   h1     │   h1     │
+   │  lead    │  lead    │
+   ├──────────┼──────────┤
+   │ figura   │          │
+   ├──────────┤ galería  │
+   │  intro   │          │ ← card "El look" con scroll si excede
+   │ (scroll) │          │
+   ├──────────┴──────────┤
+   │ detalles │ importa  │ ← 2 cards lado a lado, fila inferior
+   ├──────────┴──────────┤
+   │      volver btn     │
+   └─────────────────────┘
+
+   Truco: usamos display:contents en .look-fila y en .marca-info para
+   "disolver" esos contenedores y exponer la figura, la galería y los
+   3 bloques de info directamente como hijos del grid del container.
+   Así no necesitamos cambiar el layout de mobile/tablet — los .look-bloque
+   son simples divs que stackean vertical sin estilos hasta PC.
+   ============================================ */
+@media (min-width: 1024px) {
+    #look-marca > .container {
+        display: grid;
+        grid-template-columns: 7fr 5fr;
+        grid-template-rows: auto auto auto auto auto auto;
+        grid-template-areas:
+            "h1       h1"
+            "lead     lead"
+            "figura   galeria"
+            "intro    galeria"
+            "detalles importa"
+            "boton    boton";
+        column-gap: 30px;
+    }
+
+    /* Disolver row y article para exponer hijos directamente al grid. */
+    #look-marca .look-fila { display: contents; }
+    #look-marca > .container > .marca-info { display: contents; }
+
+    #look-marca > .container > h1 { grid-area: h1; }
+    #look-marca > .container > .marca-lead { grid-area: lead; }
+
+    /* Figura: ancla en la celda "figura". Reseteamos width/padding
+       del col-md-7 porque dentro del grid los maneja la celda. */
+    #look-marca .look-fila > .look-figura-principal {
+        grid-area: figura;
+        width: 100%;
+        max-width: 100%;
+        flex: none;
+        padding-left: 0;
+        padding-right: 0;
+        margin: 0;
+    }
+
+    /* Galería: spans rows "figura"+"intro" (3-4). El alto de esas filas
+       lo definen la figura y el card "El look" (ambas auto), así que
+       la galería se ajusta a ese alto total — sus thumbs llegan
+       exactamente al tope de la figura y al fondo del card "El look". */
+    #look-marca .look-fila > .look-galeria {
+        grid-area: galeria;
+        width: 100%;
+        max-width: 100%;
+        flex: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Inner grid 2×3 de la galería: en PC reemplazamos el row+col-6 de
+       Bootstrap por un grid propio que distribuye los 6 thumbs en 3 filas
+       iguales (1fr cada una) y 2 columnas. Con height:100% las 3 filas
+       se reparten todo el alto disponible (figura + intro card).
+       Gap de 24px en vez del g-3 (~16px) de mobile/tablet para que las
+       fotos respiren más. */
+    #look-marca .look-fila > .look-galeria > ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        gap: 24px;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Reset de los col-6 de Bootstrap dentro del inner grid: el grid
+       maneja el tamaño de cada celda, no flex/cols. */
+    #look-marca .look-fila > .look-galeria > ul > li {
+        padding: 0;
+        margin: 0;
+        width: auto;
+        max-width: none;
+        flex: none;
+    }
+
+    /* El thumb (button) llena su celda completamente. */
+    #look-marca .look-fila > .look-galeria .look-thumb {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* La imagen llena el thumb con object-fit:cover: recorta lo justo
+       para que cubra la celda sin deformarse. Así todos los thumbs
+       tienen exactamente el mismo tamaño y la grilla queda alineada. */
+    #look-marca .look-fila > .look-galeria .look-thumb > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Estilo COMÚN de las 3 cards: marco dorado del sitio + fondo navy
+       semitransparente. Mismo lenguaje visual que la card de .pagina-sobre
+       .sobre-info para mantener consistencia entre páginas. */
+    #look-marca .marca-info > .look-bloque {
+        background:
+            linear-gradient(rgba(20, 37, 82, 0.5), rgba(20, 37, 82, 0.5)) padding-box,
+            linear-gradient(135deg, rgba(224, 179, 65, 0.8) 0%, rgba(224, 179, 65, 0.2) 50%, rgba(224, 179, 65, 0.05) 100%) border-box;
+        border: 2px solid transparent;
+        border-radius: 16px;
+        padding: 20px 26px;
+        margin-top: 20px;
+    }
+
+    /* El primer h2 dentro de cualquier card no necesita margin-top extra
+       (queda pegado al borde superior del card). */
+    #look-marca .marca-info > .look-bloque > h2:first-child {
+        margin-top: 0;
+    }
+
+    #look-marca .look-bloque-intro { grid-area: intro; }
+    #look-marca .look-bloque-detalles { grid-area: detalles; }
+    #look-marca .look-bloque-importa { grid-area: importa; }
+
+    #look-marca > .container > .btn {
+        grid-area: boton;
     }
 }

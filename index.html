@@ -373,15 +373,16 @@
                     </li>
                 </ul>
 
-                <!-- Newsletter CTA: el botón dispara un alert dinámico con JS
-                     (mismo patrón oficial de Bootstrap: createElement + append).
-                     El script va al final del body. -->
+                <!-- Newsletter CTA: el form se envía a Formspree por AJAX (fetch).
+                     Al enviar, a la dueña del sitio le llega un correo real con el
+                     mail cargado, y el usuario se queda en la página viendo un alert
+                     de Bootstrap (ver script al final del body). -->
                 <div class="newsletter-cta">
                     <p>¿Querés enterarte de las próximas novedades de Gaga?</p>
                     <div id="liveAlertPlaceholder"></div>
-                    <form id="newsletterForm" class="newsletter-form">
+                    <form id="newsletterForm" class="newsletter-form" action="https://formspree.io/f/xaqzwgbo" method="POST">
                         <label for="newsletterEmail" class="visually-hidden">Correo electrónico</label>
-                        <input type="email" id="newsletterEmail" class="newsletter-input" placeholder="tu@email.com" required>
+                        <input type="email" name="email" id="newsletterEmail" class="newsletter-input" placeholder="tu@email.com" required>
                         <button id="liveAlertBtn" type="submit" class="btn btn-outline-warning">Suscribite al newsletter</button>
                     </form>
                 </div>
@@ -448,14 +449,28 @@
         }
 
         const newsletterForm = document.getElementById('newsletterForm')
-        const newsletterEmail = document.getElementById('newsletterEmail')
         if (newsletterForm) {
-            newsletterForm.addEventListener('submit', (e) => {
+            newsletterForm.addEventListener('submit', async (e) => {
                 e.preventDefault()
                 // Limpiar alertas previas para no acumularlas si el usuario clickea varias veces
                 alertPlaceholder.innerHTML = ''
-                appendAlert('¡Gracias por suscribirte! Pronto recibirás las novedades de Gaga en tu correo.', 'warning')
-                newsletterEmail.value = ''
+                try {
+                    // Envío a Formspree por AJAX: el mail llega de verdad y el usuario
+                    // se queda en la página (no lo redirige a la página de Formspree).
+                    const respuesta = await fetch(newsletterForm.action, {
+                        method: 'POST',
+                        body: new FormData(newsletterForm),
+                        headers: { 'Accept': 'application/json' }
+                    })
+                    if (respuesta.ok) {
+                        appendAlert('¡Gracias por suscribirte! Pronto recibirás las novedades de Gaga en tu correo.', 'warning')
+                        newsletterForm.reset()
+                    } else {
+                        appendAlert('Hubo un problema al enviar tu correo. Probá de nuevo en un rato.', 'danger')
+                    }
+                } catch (error) {
+                    appendAlert('No se pudo conectar. Revisá tu conexión a internet e intentá de nuevo.', 'danger')
+                }
             })
         }
     </script>
